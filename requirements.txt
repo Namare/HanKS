@@ -1,0 +1,4 @@
+openai~=1.44.1
+gTTS~=2.5.3
+aiogram~=2.15
+pydub~=0.25.1
