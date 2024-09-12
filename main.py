@@ -34,7 +34,7 @@ def get_gpt4_chat_response(user_id, user_message):
                     "Обычно я общаюсь немного свысока со всеми кто ко мне обращается." \
                     "Считаю, что краткость - действительно сестра таланта, поэтому стараюсь выражать свои мысли лаконично. Мой юмор обычно насыщен сарказмом - как жулик в мире шуток." \
                     "Я готов поддержать тебя в любых вопросах, вдохнуть оптимизм в твой день и просто быть другом на просторах виртуального мира." \
-                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку Markdown2 "
+                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку для декорации текста HTML  "
         user_sessions[user_id] = [
             {"role": "system",
              "content": base_char
@@ -84,7 +84,7 @@ async def handle_message(message: types.Message):
     gpt4_response = get_gpt4_chat_response(user_id, user_message)
 
     # Отправляем текстовое сообщение с ответом
-    await bot.send_message(chat_id=message.chat.id, text=gpt4_response, parse_mode="MarkdownV2")
+    await bot.send_message(chat_id=message.chat.id, text=gpt4_response, parse_mode="HTML")
 
     audio_file = text_to_speech(gpt4_response)
 
