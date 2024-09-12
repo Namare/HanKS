@@ -24,11 +24,27 @@ user_sessions = {}
 
 
 def escape_markdown_v2(text):
-    # Список символов, которые нужно экранировать в MarkdownV2
-    special_characters = r'_*\[\]()~`>#+\-=|{}.!'
+    # Последовательно заменяем символы MarkdownV2
+    text = text.replace("_", "\\_")
+    text = text.replace("*", "\\*")
+    text = text.replace("[", "\\[")
+    text = text.replace("]", "\\]")
+    text = text.replace("(", "\\(")
+    text = text.replace(")", "\\)")
+    text = text.replace("~", "\\~")
+    text = text.replace("`", "\\`")
+    text = text.replace(">", "\\>")
+    text = text.replace("#", "\\#")
+    text = text.replace("+", "\\+")
+    text = text.replace("-", "\\-")
+    text = text.replace("=", "\\=")
+    text = text.replace("|", "\\|")
+    text = text.replace("{", "\\{")
+    text = text.replace("}", "\\}")
+    text = text.replace(".", "\\.")
+    text = text.replace("!", "\\!")
 
-    # Экранируем каждый специальный символ с помощью обратной косой черты
-    return re.sub(f'([{re.escape(special_characters)}])', r'\\\1', text)
+    return text
 
 def get_gpt4_chat_response(user_id, user_message):
     if user_id not in user_sessions:
