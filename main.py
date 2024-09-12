@@ -3,7 +3,7 @@ from openai import OpenAI
 from gtts import gTTS
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
-import time
+import re
 import pprint
 from pydub import AudioSegment
 
@@ -22,7 +22,8 @@ dp = Dispatcher(bot)
 
 user_sessions = {}
 
-
+def escape_markdown(text):
+    return re.sub(r'([_*\[\]()~`>#+\-=|{}.!])', r'\\\1', text)
 def get_gpt4_chat_response(user_id, user_message):
     if user_id not in user_sessions:
         base_char = "Я - Хенкс, енот-программист искуственных интеллект бот асисстент." \
@@ -86,8 +87,8 @@ async def handle_message(message: types.Message):
 
     # Отправляем текстовое сообщение с ответом
     await bot.send_message(chat_id=message.chat.id, text=gpt4_response, parse_mode="MarkdownV2")
-
-    audio_file = text_to_speech(gpt4_response)
+    res = escape_markdown(gpt4_response)
+    audio_file = text_to_speech(res)
 
     # Отправляем голосовое сообщение
     await message.reply_voice(open(audio_file, 'rb'))
