@@ -98,7 +98,7 @@ async def handle_message(message: types.Message):
 
     # Отправляем текстовое сообщение с ответом
     await bot.send_message(chat_id=message.chat.id, text=gpt4_response, parse_mode="MarkdownV2")
-    res = escape_markdown(gpt4_response)
+    res = escape_markdown_v2(gpt4_response)
     audio_file = text_to_speech(res)
 
     # Отправляем голосовое сообщение
