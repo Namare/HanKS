@@ -24,17 +24,12 @@ user_sessions = {}
 
 
 def escape_markdown_v2(text):
-    # Экранируем специальные символы в тексте
-    text = re.sub(r'([_*\[\]()~`>#+\-=|{}.!])', r'\\\1', text)
+    # Список символов, которые нужно экранировать в MarkdownV2
+    special_characters = r'_*\[\]()~`>#+\-=|{}.!'
 
-    # Экранируем символы внутри pre и code блоков
-    text = re.sub(r'(`+)', r'\\\1', text)  # Экранируем обратные кавычки
-    text = re.sub(r'(\\)', r'\\\\', text)  # Экранируем обратные косые черты
+    # Экранируем каждый специальный символ с помощью обратной косой черты
+    return re.sub(f'([{re.escape(special_characters)}])', r'\\\1', text)
 
-    # Экранируем символы внутри ссылок (http://example.com)
-    text = re.sub(r'(\))', r'\\\1', text)
-
-    return text
 def get_gpt4_chat_response(user_id, user_message):
     if user_id not in user_sessions:
         base_char = "Я - Хенкс, енот-программист искуственных интеллект бот асисстент." \
