@@ -23,7 +23,7 @@ dp = Dispatcher(bot)
 user_sessions = {}
 
 def escape_markdown(text):
-    return re.sub(r'([_*\[\]()~`>#+\-=|{}.!])', r'\\\1', text)
+    return re.sub(r'([_*\[\]()~`>#+\-=|{}.!])', r'\\\\\1', text)
 def get_gpt4_chat_response(user_id, user_message):
     if user_id not in user_sessions:
         base_char = "Я - Хенкс, енот-программист искуственных интеллект бот асисстент." \
