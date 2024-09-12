@@ -43,7 +43,7 @@ def get_gpt4_chat_response(user_id, user_message):
 
     response = client.chat.completions.create(
         messages=user_sessions[user_id],
-        model="o1-preview",
+        model="gpt-4o",
     )
 
     # Получаем текст ответа
@@ -73,7 +73,7 @@ def text_to_speech(text, lang='ru'):
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
     print(client)
-    await message.reply("Привет! Я недовольный енот-программист, задавай вопросы, и я gfh буду отшучиваться.")
+    await message.reply("Привет! Я недовольный енот-программист, задавай вопросы, и я  буду отшучиваться.")
 
 
 @dp.message_handler()
