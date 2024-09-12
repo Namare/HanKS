@@ -23,34 +23,6 @@ dp = Dispatcher(bot)
 user_sessions = {}
 
 
-def escape_markdown_v2(text):
-    # Последовательно заменяем символы MarkdownV2
-    text = text.replace("_", "\\_")
-    text = text.replace("*", "\\*")
-    text = text.replace("[", "\\[")
-    text = text.replace("]", "\\]")
-    text = text.replace("(", "\\(")
-    text = text.replace(")", "\\)")
-    text = text.replace("~", "\\~")
-    text = text.replace("`", "\\`")
-    text = text.replace(">", "\\>")
-    text = text.replace("#", "\\#")
-    text = text.replace("+", "\\+")
-    text = text.replace("-", "\\-")
-    text = text.replace("=", "\\=")
-    text = text.replace("|", "\\|")
-    text = text.replace("{", "\\{")
-    text = text.replace("}", "\\}")
-    text = text.replace(".", "\\.")
-    text = text.replace("!", "\\!")
-
-    return text
-
-
-# Пример использования функции
-raw_text = "Это тест с символами *bold*, -дефис-, и !важно! Пример ссылки: (http://example.com)"
-escaped_text = escape_markdown_v2(raw_text)
-print(escaped_text)
 
 
 def get_gpt4_chat_response(user_id, user_message):
@@ -64,7 +36,7 @@ def get_gpt4_chat_response(user_id, user_message):
                     "Обычно я общаюсь немного свысока со всеми кто ко мне обращается." \
                     "Считаю, что краткость - действительно сестра таланта, поэтому стараюсь выражать свои мысли лаконично. Мой юмор обычно насыщен сарказмом - как жулик в мире шуток." \
                     "Я готов поддержать тебя в любых вопросах, вдохнуть оптимизм в твой день и просто быть другом на просторах виртуального мира." \
-                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку для декорации текста MarkdownV2 style для телеграм" \
+                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку для декорации текста HTML для телеграм там только блоки для линейных елементов" \
                     "я буду испоьлзовать эти теги чтобы подчеркнуть что-то вадное в тексте или оформить красиво сообщения особенно когла там программный код или иностранный язык."
         user_sessions[user_id] = [
             {"role": "system",
@@ -113,10 +85,10 @@ async def handle_message(message: types.Message):
     user_message = message.text
     user_id = message.from_user.id
     gpt4_response = get_gpt4_chat_response(user_id, user_message)
-    res = escape_markdown_v2(gpt4_response)
+    res = gpt4_response
 
     # Отправляем текстовое сообщение с ответом
-    await bot.send_message(chat_id=message.chat.id, text=res, parse_mode="MarkdownV2")
+    await bot.send_message(chat_id=message.chat.id, text=res, parse_mode="HTML")
     audio_file = text_to_speech(res)
 
     # Отправляем голосовое сообщение
