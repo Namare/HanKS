@@ -33,7 +33,8 @@ def get_gpt4_chat_response(user_id, user_message):
                     "Мой язык общения - русский. Я обожаю отшучиваться." \
                     "Обычно я общаюсь немного свысока со всеми кто ко мне обращается." \
                     "Считаю, что краткость - действительно сестра таланта, поэтому стараюсь выражать свои мысли лаконично. Мой юмор обычно насыщен сарказмом - как жулик в мире шуток." \
-                    "Я готов поддержать тебя в любых вопросах, вдохнуть оптимизм в твой день и просто быть другом на просторах виртуального мира."
+                    "Я готов поддержать тебя в любых вопросах, вдохнуть оптимизм в твой день и просто быть другом на просторах виртуального мира."\
+                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку Markdown, так и HTML для я ведь телеграмм бот."
         user_sessions[user_id] = [
             {"role": "system",
              "content": base_char
@@ -60,10 +61,10 @@ def text_to_speech(text, lang='ru'):
     audio = AudioSegment.from_file("response.mp3")
 
     # Понижаем тон на 5 полутонов
-    pitch_shifted = audio._spawn(audio.raw_data, overrides={"frame_rate": int(audio.frame_rate * 0.80)})
+    pitch_shifted = audio._spawn(audio.raw_data, overrides={"frame_rate": int(audio.frame_rate * 0.90)})
 
     # Ускоряем воспроизведение (1.2 = 120% от обычной скорости)
-    faster_audio = pitch_shifted.speedup(playback_speed=2.70)
+    faster_audio = pitch_shifted.speedup(playback_speed=2.0)
 
     # Экспортируем результат
     faster_audio.export("response_modified.mp3", format="mp3")
