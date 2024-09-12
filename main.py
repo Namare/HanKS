@@ -24,17 +24,35 @@ user_sessions = {}
 
 
 def escape_markdown_v2(text):
-    # Экранируем специальные символы в тексте
-    text = re.sub(r'([_*\[\]()~`>#+\-=|{}.!])', r'\\\1', text)
-
-    # Экранируем символы внутри pre и code блоков
-    text = re.sub(r'(`+)', r'\\\1', text)  # Экранируем обратные кавычки
-    text = re.sub(r'(\\)', r'\\\\', text)  # Экранируем обратные косые черты
-
-    # Экранируем символы внутри ссылок (http://example.com)
-    text = re.sub(r'(\))', r'\\\1', text)
+    # Последовательно заменяем символы MarkdownV2
+    text = text.replace("_", "\\_")
+    text = text.replace("*", "\\*")
+    text = text.replace("[", "\\[")
+    text = text.replace("]", "\\]")
+    text = text.replace("(", "\\(")
+    text = text.replace(")", "\\)")
+    text = text.replace("~", "\\~")
+    text = text.replace("`", "\\`")
+    text = text.replace(">", "\\>")
+    text = text.replace("#", "\\#")
+    text = text.replace("+", "\\+")
+    text = text.replace("-", "\\-")
+    text = text.replace("=", "\\=")
+    text = text.replace("|", "\\|")
+    text = text.replace("{", "\\{")
+    text = text.replace("}", "\\}")
+    text = text.replace(".", "\\.")
+    text = text.replace("!", "\\!")
 
     return text
+
+
+# Пример использования функции
+raw_text = "Это тест с символами *bold*, -дефис-, и !важно! Пример ссылки: (http://example.com)"
+escaped_text = escape_markdown_v2(raw_text)
+print(escaped_text)
+
+
 def get_gpt4_chat_response(user_id, user_message):
     if user_id not in user_sessions:
         base_char = "Я - Хенкс, енот-программист искуственных интеллект бот асисстент." \
