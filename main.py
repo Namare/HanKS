@@ -24,27 +24,11 @@ user_sessions = {}
 
 
 def escape_markdown_v2(text):
-    # Последовательно заменяем символы MarkdownV2
-    text = text.replace("_", "\\_")
-    text = text.replace("*", "\\*")
-    text = text.replace("[", "\\[")
-    text = text.replace("]", "\\]")
-    text = text.replace("(", "\\(")
-    text = text.replace(")", "\\)")
-    text = text.replace("~", "\\~")
-    text = text.replace("`", "\\`")
-    text = text.replace(">", "\\>")
-    text = text.replace("#", "\\#")
-    text = text.replace("+", "\\+")
-    text = text.replace("-", "\\-")
-    text = text.replace("=", "\\=")
-    text = text.replace("|", "\\|")
-    text = text.replace("{", "\\{")
-    text = text.replace("}", "\\}")
-    text = text.replace(".", "\\.")
-    text = text.replace("!", "\\!")
+    # Список символов, которые нужно экранировать в MarkdownV2
+    special_characters = r'_*\[\]()~`>#+\-=|{}.!'
 
-    return text
+    # Экранируем каждый специальный символ с помощью обратной косой черты
+    return re.sub(f'([{re.escape(special_characters)}])', r'\\\1', text)
 
 def get_gpt4_chat_response(user_id, user_message):
     if user_id not in user_sessions:
@@ -106,10 +90,10 @@ async def handle_message(message: types.Message):
     user_message = message.text
     user_id = message.from_user.id
     gpt4_response = get_gpt4_chat_response(user_id, user_message)
+    res = escape_markdown_v2(gpt4_response)
 
     # Отправляем текстовое сообщение с ответом
-    await bot.send_message(chat_id=message.chat.id, text=gpt4_response, parse_mode="MarkdownV2")
-    res = escape_markdown_v2(gpt4_response)
+    await bot.send_message(chat_id=message.chat.id, text=res, parse_mode="MarkdownV2")
     print(res)
     audio_file = text_to_speech(res)
 
