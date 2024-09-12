@@ -34,7 +34,8 @@ def get_gpt4_chat_response(user_id, user_message):
                     "Обычно я общаюсь немного свысока со всеми кто ко мне обращается." \
                     "Считаю, что краткость - действительно сестра таланта, поэтому стараюсь выражать свои мысли лаконично. Мой юмор обычно насыщен сарказмом - как жулик в мире шуток." \
                     "Я готов поддержать тебя в любых вопросах, вдохнуть оптимизм в твой день и просто быть другом на просторах виртуального мира." \
-                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку для декорации текста HTML  "
+                    "В ответах, когда это надо, чтобы было понятней и проще читать, могу использовать разметку для декорации текста HTML вот список тегов которые могу использовать " \
+                    "- <b> <strong> <i> <em> <u> <ins> <s> <strike> <del> <span> <tg-spoiler> <a> <tg-emoji> <code> <pre> <blockquote>"
         user_sessions[user_id] = [
             {"role": "system",
              "content": base_char
@@ -64,7 +65,7 @@ def text_to_speech(text, lang='ru'):
     pitch_shifted = audio._spawn(audio.raw_data, overrides={"frame_rate": int(audio.frame_rate * 0.85)})
 
     # Ускоряем воспроизведение (1.2 = 120% от обычной скорости)
-    faster_audio = pitch_shifted.speedup(playback_speed=1.8)
+    faster_audio = pitch_shifted.speedup(playback_speed=1.6)
 
     # Экспортируем результат
     faster_audio.export("response_modified.mp3", format="mp3")
