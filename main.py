@@ -62,10 +62,10 @@ def text_to_speech(text, lang='ru'):
     audio = AudioSegment.from_file("response.mp3")
 
     # Понижаем тон на 5 полутонов
-    pitch_shifted = audio._spawn(audio.raw_data, overrides={"frame_rate": int(audio.frame_rate * 1)})
+    pitch_shifted = audio._spawn(audio.raw_data, overrides={"frame_rate": int(audio.frame_rate * 1.1)})
 
     # Ускоряем воспроизведение (1.2 = 120% от обычной скорости)
-    faster_audio = pitch_shifted.speedup(playback_speed=1.4)
+    faster_audio = pitch_shifted.speedup(playback_speed=1.5)
 
     # Экспортируем результат
     faster_audio.export("response_modified.mp3", format="mp3")
