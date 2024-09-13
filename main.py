@@ -47,7 +47,7 @@ def get_gpt4_chat_response(user_id, user_message):
 
     response = client.chat.completions.create(
         messages=user_sessions[user_id],
-        model="gpt-4o",
+        model="gpt-4o-mini",
     )
 
     # Получаем текст ответа
